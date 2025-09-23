@@ -1,46 +1,92 @@
+
 import React from 'react';
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <div className="min-h-screen bg-[#1a1a2e] text-white font-roboto">
-            <header className="bg-[#0f3460] px-8 py-4 flex items-center justify-between">
-                <div className="font-bold text-2xl tracking-wider">
-                    <span role="img" aria-label="logo">🦸‍♂️</span> SUGOIHUB
+interface SquareItem {
+  id: string;
+  title: string;
+  value: string;
+  subValue?: string;
+}
+
+interface LayoutGridProps {
+  items: SquareItem[];
+}
+
+const LayoutGrid: React.FC<LayoutGridProps> = ({ items }) => {
+  // Organizar los elementos en grupos para crear la estructura visual
+  const mainItem = items[0]; // El primer elemento es más grande
+  const secondaryItems = items.slice(1, 5); // Siguientes 4 elementos
+  const remainingItems = items.slice(5); // Resto de elementos
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <header className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">TFTG MAW</h1>
+          <div className="mt-4 text-gray-600">
+            <p>The group with the user on all mail posts</p>
+            <p>an administrator with the range server from Instagram to online</p>
+            <ul className="list-disc list-inside ml-4">
+              <li>Ralph</li>
+              <li>Steven & gerson@tftg.com</li>
+            </ul>
+            <p>Internet or internet tips match</p>
+            <p>Things API, Tech, Bono and you go</p>
+            <p>Online for anytime</p>
+          </div>
+        </header>
+
+        {/* Executive Panel Section */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Executive panel dd pressure</h2>
+          
+          {/* User Section */}
+          <div className="mb-6">
+            <h3 className="text-xl font-medium text-gray-800 mb-3">User</h3>
+            
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              {/* Main Square (larger) */}
+              <div className="md:col-span-2 bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                <h4 className="font-bold text-lg mb-2">{mainItem?.title}</h4>
+                <div className="text-3xl font-bold text-gray-800">{mainItem?.value}</div>
+                {mainItem?.subValue && (
+                  <div className="text-sm text-gray-500 mt-1">{mainItem.subValue}</div>
+                )}
+              </div>
+              
+              {/* Secondary Squares */}
+              <div className="grid grid-cols-2 gap-4">
+                {secondaryItems.map((item) => (
+                  <div key={item.id} className="bg-white rounded-lg shadow p-4">
+                    <h5 className="font-semibold text-sm mb-1">{item.title}</h5>
+                    <div className="text-xl font-bold text-gray-800">{item.value}</div>
+                    {item.subValue && (
+                      <div className="text-xs text-gray-500 mt-1">{item.subValue}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Remaining Items Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {remainingItems.map((item) => (
+                <div key={item.id} className="bg-white rounded shadow p-3">
+                  <h5 className="font-medium text-xs mb-1 truncate">{item.title}</h5>
+                  <div className="text-lg font-bold text-gray-800">{item.value}</div>
+                  {item.subValue && (
+                    <div className="text-xs text-gray-500 mt-1">{item.subValue}</div>
+                  )}
                 </div>
-                <nav>
-                    <a href="#" className="text-[#e94560] mx-4 no-underline">Inicio</a>
-                    <a href="#" className="text-[#e94560] mx-4 no-underline">Comunidades</a>
-                    <a href="#" className="text-[#e94560] mx-4 no-underline">Perfil</a>
-                </nav>
-            </header>
-            <main className="flex max-w-[1200px] mx-auto my-8 gap-8">
-                <aside className="w-[250px] bg-[#16213e] rounded-lg p-4 min-h-[400px]">
-                    <h3 className="text-[#e94560]">Menú</h3>
-                    <ul className="list-none p-0">
-                        <li><a href="#" className="text-white no-underline">Mi feed</a></li>
-                        <li><a href="#" className="text-white no-underline">Amigos</a></li>
-                        <li><a href="#" className="text-white no-underline">Eventos</a></li>
-                        <li><a href="#" className="text-white no-underline">Ajustes</a></li>
-                    </ul>
-                </aside>
-                <section className="flex-1">
-                    {children}
-                </section>
-                <aside className="w-[250px] bg-[#16213e] rounded-lg p-4 min-h-[400px]">
-                    <h3 className="text-[#e94560]">Tendencias</h3>
-                    <ul className="list-none p-0">
-                        <li>#Anime</li>
-                        <li>#Manga</li>
-                        <li>#Videojuegos</li>
-                        <li>#Cosplay</li>
-                    </ul>
-                </aside>
-            </main>
-            <footer className="bg-[#0f3460] text-center py-4 mt-8">
-                © {new Date().getFullYear()} SUGOIHUB - Comunidad Friki
-            </footer>
-        </div>
-    );
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
 };
 
-export default Layout;
+export default LayoutGrid;
